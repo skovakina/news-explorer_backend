@@ -1,20 +1,81 @@
-const ClothingItem = require("../models/clothingitem");
+const Article = require("../models/article");
 const BadRequestError = require("../utils/BadRequestError");
 const ForbiddenError = require("../utils/ForbiddenError");
 const NotFoundError = require("../utils/NotFoundError");
 
-module.exports.getItems = (req, res, next) => {
-  ClothingItem.find({})
+module.exports.getArticles = (req, res, next) => {
+  console.log("here!");
+  Article.find({})
     .then((items) => res.send(items))
     .catch(next);
 };
 
-module.exports.createItem = (req, res, next) => {
-  const { name, weather, imageUrl, owner = req.user._id } = req.body;
-  ClothingItem.create({ name, weather, imageUrl, owner })
+//   getArticles,
+// addArticle,
+// deleteArticle,
+
+//   keyword: {
+//     type: String,
+//     required: true,
+//   },
+//   title: {
+//     type: String,
+//     required: true,
+//   },
+//   text: {
+//     type: String,
+//     required: true,
+//   },
+//   date: {
+//     type: String,
+//     required: true,
+//   },
+//   source: {
+//     type: String,
+//     required: true,
+//   },
+//   link: {
+//     type: String,
+//     required: true,
+//     validate: {
+//       validator(value) {
+//         return validator.isURL(value);
+//       },
+//     },
+//   },
+//   image: {
+//     type: String,
+//     required: true,
+//     validate: {
+//       validator(value) {
+//         return validator.isURL(value);
+//       },
+//     },
+//   },
+//   owner: {
+//     type: mongoose.Schema.Types.ObjectId,
+//     ref: "user",
+//     required: true,
+//   },
+// });
+
+module.exports.addArticle = (req, res, next) => {
+  const {
+    keyword,
+    title,
+    text,
+    date,
+    source,
+    link,
+    image,
+    owner = req.user._id,
+  } = req.body;
+
+  Article.create({ keyword, title, text, date, source, link, image, owner })
     .then((item) => res.send(item))
     .catch((err) => {
       if (err.name === "ValidationError") {
+        console.log(err);
         next(new BadRequestError("Invalid data"));
       } else {
         next(err);
@@ -22,9 +83,10 @@ module.exports.createItem = (req, res, next) => {
     });
 };
 
-module.exports.deleteItem = (req, res, next) => {
-  const { _id } = req.params._id;
-  ClothingItem.findById(_id)
+module.exports.deleteArticle = (req, res, next) => {
+  const { _id } = req.params;
+  console.log(req.params);
+  Article.findById(_id)
     .then((item) => {
       if (!item) {
         throw new NotFoundError("Item not found");
@@ -36,7 +98,7 @@ module.exports.deleteItem = (req, res, next) => {
         );
       }
 
-      return ClothingItem.deleteOne({ _id })
+      return Article.deleteOne({ _id })
         .then(() => res.send({ message: "Item deleted" }))
         .catch((err) => {
           if (err.name === "CastError") {
@@ -45,49 +107,6 @@ module.exports.deleteItem = (req, res, next) => {
             next(err);
           }
         });
-    })
-    .catch((err) => {
-      if (err.name === "CastError") {
-        next(new BadRequestError("Invalid ID"));
-      } else {
-        next(err);
-      }
-    });
-};
-
-module.exports.likeItem = (req, res, next) => {
-  ClothingItem.findByIdAndUpdate(
-    req.params._id,
-    { $addToSet: { likes: req.user._id } },
-    { new: true },
-  )
-    .then((item) => {
-      if (!item) {
-        throw new NotFoundError("Item not found");
-      }
-
-      return res.send(item);
-    })
-    .catch((err) => {
-      if (err.name === "CastError") {
-        next(new BadRequestError("Invalid ID"));
-      } else {
-        next(err);
-      }
-    });
-};
-
-module.exports.dislikeItem = (req, res, next) => {
-  ClothingItem.findByIdAndUpdate(
-    req.params._id,
-    { $pull: { likes: req.user._id } },
-    { new: true },
-  )
-    .then((item) => {
-      if (!item) {
-        throw new NotFoundError("Item not found");
-      }
-      return res.send(item);
     })
     .catch((err) => {
       if (err.name === "CastError") {

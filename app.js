@@ -24,7 +24,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(requestLogger);
 
 app.use("/", require("./routes/users"));
-// app.use("/", require("./routes/clothingitems"));
+app.use("/", require("./routes/articles"));
 
 app.use((req, res, next) => {
   next(new NotFoundError("Page not found"));

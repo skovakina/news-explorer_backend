@@ -8,18 +8,31 @@ const validateURL = (value, helpers) => {
   return helpers.error("string.uri");
 };
 
-module.exports.validateCardBody = celebrate({
+module.exports.validateArticleBody = celebrate({
   body: Joi.object().keys({
-    name: Joi.string().required().min(2).max(30).messages({
-      "string.min": 'The minimum length of the "name" field is 2',
-      "string.max": 'The maximum length of the "name" field is 30',
-      "string.empty": 'The "name" field must be filled in',
+    keyword: Joi.string().required().messages({
+      "string.empty": '"keyword" field must be filled in',
     }),
-    imageUrl: Joi.string().custom(validateURL).required().messages({
-      "string.empty": 'The "imageUrl" field must be filled in',
-      "string.uri": 'the "imageUrl" field must be a valid url',
+    title: Joi.string().required().messages({
+      "string.empty": '"title" field must be filled in',
     }),
-    weather: Joi.string().required().valid("hot", "warm", "cold"),
+    text: Joi.string().required().messages({
+      "string.empty": '"text" field must be filled in',
+    }),
+    date: Joi.string().required().messages({
+      "string.empty": '"date" field must be filled in',
+    }),
+    source: Joi.string().required().messages({
+      "string.empty": '"source" field must be filled in',
+    }),
+    link: Joi.string().custom(validateURL).messages({
+      "string.empty": '"link" field must be filled in',
+      "string.uri": '"link" field must be a valid URL',
+    }),
+    image: Joi.string().custom(validateURL).messages({
+      "string.empty": '"image" field must be filled in',
+      "string.uri": '"image" field must be a valid URL',
+    }),
   }),
 });
 
@@ -52,26 +65,12 @@ module.exports.validateSignin = celebrate({
   }),
 });
 
-module.exports.validateEditProfile = celebrate({
-  body: Joi.object().keys({
-    name: Joi.string().required().min(2).max(30).messages({
-      "string.min": 'The minimum length of the "name" field is 2',
-      "string.max": 'The maximum length of the "name" field is 30',
-      "string.empty": 'The "name" field must be filled in',
-    }),
-    avatar: Joi.string().uri().required().messages({
-      "string.empty": 'The "Avatar" field must be filled in',
-      "string.uri": 'the "Avatar" field must be a valid url',
-    }),
-  }),
-});
-
 module.exports.validateId = celebrate({
   params: Joi.object().keys({
     _id: Joi.string().hex().length(24).required().messages({
       "string.empty": "id is required",
-      "string.hex": "incorrect id value",
-      "string.length": "incorrect id value",
+      "string.hex": "incorrect id value hex",
+      "string.length": "incorrect id value length",
     }),
   }),
 });
