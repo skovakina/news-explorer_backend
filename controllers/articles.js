@@ -10,55 +10,6 @@ module.exports.getArticles = (req, res, next) => {
     .catch(next);
 };
 
-//   getArticles,
-// addArticle,
-// deleteArticle,
-
-//   keyword: {
-//     type: String,
-//     required: true,
-//   },
-//   title: {
-//     type: String,
-//     required: true,
-//   },
-//   text: {
-//     type: String,
-//     required: true,
-//   },
-//   date: {
-//     type: String,
-//     required: true,
-//   },
-//   source: {
-//     type: String,
-//     required: true,
-//   },
-//   link: {
-//     type: String,
-//     required: true,
-//     validate: {
-//       validator(value) {
-//         return validator.isURL(value);
-//       },
-//     },
-//   },
-//   image: {
-//     type: String,
-//     required: true,
-//     validate: {
-//       validator(value) {
-//         return validator.isURL(value);
-//       },
-//     },
-//   },
-//   owner: {
-//     type: mongoose.Schema.Types.ObjectId,
-//     ref: "user",
-//     required: true,
-//   },
-// });
-
 module.exports.addArticle = (req, res, next) => {
   const {
     keyword,
@@ -85,7 +36,6 @@ module.exports.addArticle = (req, res, next) => {
 
 module.exports.deleteArticle = (req, res, next) => {
   const { _id } = req.params;
-  console.log(req.params);
   Article.findById(_id)
     .then((item) => {
       if (!item) {
