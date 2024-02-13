@@ -4,7 +4,6 @@ const ForbiddenError = require("../utils/ForbiddenError");
 const NotFoundError = require("../utils/NotFoundError");
 
 module.exports.getArticles = (req, res, next) => {
-  console.log("here!");
   Article.find({})
     .then((items) => res.send(items))
     .catch(next);
@@ -26,7 +25,6 @@ module.exports.addArticle = (req, res, next) => {
     .then((item) => res.send(item))
     .catch((err) => {
       if (err.name === "ValidationError") {
-        console.log(err);
         next(new BadRequestError("Invalid data"));
       } else {
         next(err);
