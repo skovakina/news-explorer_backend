@@ -12,9 +12,9 @@ const { requestLogger, errorLogger } = require("./middlewares/logger");
 const NotFoundError = require("./utils/NotFoundError");
 
 const app = express();
-const { PORT = 3001 } = process.env;
+const { PORT = 3001, DB_ADDRESS } = process.env;
 
-mongoose.connect("mongodb://127.0.0.1:27017/news_db");
+mongoose.connect(DB_ADDRESS);
 
 app.use(cors());
 app.use(helmet());

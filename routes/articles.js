@@ -11,7 +11,7 @@ const {
   validateId,
 } = require("../middlewares/validation");
 
-router.get("/articles", getArticles);
+router.get("/articles", auth, getArticles);
 router.post("/articles", auth, validateArticleBody, addArticle);
 router.delete("/articles/:_id", auth, validateId, deleteArticle);
 
