@@ -4,8 +4,7 @@ const ForbiddenError = require("../utils/ForbiddenError");
 const NotFoundError = require("../utils/NotFoundError");
 
 module.exports.getArticles = (req, res, next) => {
-  Article.find({ owner: req.user._id });
-  Article.find({})
+  Article.find({ owner: req.user._id })
     .then((items) => res.send(items))
     .catch(next);
 };
