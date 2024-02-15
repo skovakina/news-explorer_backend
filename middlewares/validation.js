@@ -16,20 +16,20 @@ module.exports.validateArticleBody = celebrate({
     title: Joi.string().required().messages({
       "string.empty": '"title" field must be filled in',
     }),
-    text: Joi.string().required().messages({
+    content: Joi.string().required().messages({
       "string.empty": '"text" field must be filled in',
     }),
-    date: Joi.string().required().messages({
+    publishedAt: Joi.string().required().messages({
       "string.empty": '"date" field must be filled in',
     }),
     source: Joi.string().required().messages({
       "string.empty": '"source" field must be filled in',
     }),
-    link: Joi.string().custom(validateURL).messages({
+    url: Joi.string().custom(validateURL).messages({
       "string.empty": '"link" field must be filled in',
       "string.uri": '"link" field must be a valid URL',
     }),
-    image: Joi.string().custom(validateURL).messages({
+    urlToImage: Joi.string().custom(validateURL).messages({
       "string.empty": '"image" field must be filled in',
       "string.uri": '"image" field must be a valid URL',
     }),

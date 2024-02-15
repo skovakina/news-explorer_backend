@@ -4,7 +4,8 @@ const ForbiddenError = require("../utils/ForbiddenError");
 const NotFoundError = require("../utils/NotFoundError");
 
 module.exports.getArticles = (req, res, next) => {
-  Article.find({ owner: req.user._id })
+  Article.find({ owner: req.user._id });
+  Article.find({})
     .then((items) => res.send(items))
     .catch(next);
 };
@@ -13,15 +14,24 @@ module.exports.addArticle = (req, res, next) => {
   const {
     keyword,
     title,
-    text,
-    date,
+    content,
+    publishedAt,
     source,
     link,
     image,
     owner = req.user._id,
   } = req.body;
 
-  Article.create({ keyword, title, text, date, source, link, image, owner })
+  Article.create({
+    keyword,
+    title,
+    content,
+    publishedAt,
+    source,
+    url,
+    urlToImage,
+    owner,
+  })
     .then((item) => res.send(item))
     .catch((err) => {
       if (err.name === "ValidationError") {
