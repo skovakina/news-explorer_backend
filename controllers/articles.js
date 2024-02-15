@@ -17,8 +17,8 @@ module.exports.addArticle = (req, res, next) => {
     content,
     publishedAt,
     source,
-    link,
-    image,
+    url,
+    urlToImage,
     owner = req.user._id,
   } = req.body;
 
