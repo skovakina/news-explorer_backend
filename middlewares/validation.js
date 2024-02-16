@@ -16,7 +16,7 @@ module.exports.validateArticleBody = celebrate({
     title: Joi.string().required().messages({
       "string.empty": '"title" field must be filled in',
     }),
-    content: Joi.string().required().messages({
+    description: Joi.string().required().messages({
       "string.empty": '"text" field must be filled in',
     }),
     publishedAt: Joi.string().required().messages({

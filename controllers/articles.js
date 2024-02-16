@@ -13,7 +13,7 @@ module.exports.addArticle = (req, res, next) => {
   const {
     keyword,
     title,
-    content,
+    description,
     publishedAt,
     source,
     url,
@@ -24,7 +24,7 @@ module.exports.addArticle = (req, res, next) => {
   Article.create({
     keyword,
     title,
-    content,
+    description,
     publishedAt,
     source,
     url,
