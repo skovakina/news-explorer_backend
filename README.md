@@ -8,7 +8,3 @@ The project is focused on creating a server for the News Explorer App.
 - MongoDB
 - Postman
 
-## Live
-
-https://sko-news.mooo.com/
-API: https://api.sko-news.mooo.com/
